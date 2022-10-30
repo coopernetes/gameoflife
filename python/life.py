@@ -36,5 +36,8 @@ def count_neighbours(cell: List[List[bool]], state: bool = False) -> int:
     flattened = list(itertools.chain(*neighbours))
     return len([x for x in flattened if x is state])
 
-def convert_to_live(cell: List[List[bool]]) -> List[List[bool]]:
-    return cell
+
+def update(cell: List[List[bool]], state: bool) -> List[List[bool]]:
+    new_cell = copy.deepcopy(cell)
+    new_cell[1][1] = state
+    return new_cell

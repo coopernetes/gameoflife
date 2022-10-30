@@ -24,3 +24,11 @@ def test_life_counts_live_neighbours():
 def test_life_counts_dead_neighbours():
     c1 = [[True, True, True], [False, False, False], [True, False, True]]
     assert life.count_neighbours(c1, False) == 3
+
+
+def test_update():
+    c1 = [[True, True, True], [False, False, False], [False, False, False]]
+    assert life.update(c1, True)[1][1] is True
+
+    c2 = [[True, False, False], [False, True, False], [False, False, False]]
+    assert life.update(c2, False)[1][1] is False
