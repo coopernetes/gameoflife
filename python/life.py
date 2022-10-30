@@ -1,5 +1,6 @@
 import copy
 import itertools
+import random
 from typing import List
 
 
@@ -9,6 +10,15 @@ def initialize_cell():
         [False, False, False],
         [False, False, False]
     ]
+
+
+def random_cell():
+    cell = []
+    for i in range(3):
+        cell.append([])
+        for j in range(3):
+            cell[i].append(random.choice([True, False]))
+    return cell
 
 
 def is_alive(cell: List[List[bool]]) -> bool:
