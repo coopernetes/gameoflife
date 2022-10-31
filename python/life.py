@@ -51,3 +51,14 @@ def update(cell: List[List[bool]], state: bool) -> List[List[bool]]:
     new_cell = copy.deepcopy(cell)
     new_cell[1][1] = state
     return new_cell
+
+
+if __name__ == '__main__':
+    c = random_cell()
+    # c = initialize_cell()
+    print(c)
+    print(f"Is alive? {is_alive(c)}")
+    print(f"Is dead? {is_dead(c)}")
+    print(f"Live Neighbours? {count_neighbours(c, True)}")
+    print(f"Dead Neighbours? {count_neighbours(c, False)}")
+    print(f"Should live? {should_live(c)}")

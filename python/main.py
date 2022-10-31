@@ -1,35 +1,72 @@
+import itertools
+import random
 import life
 import pyglet
+
 DEAD_COLOUR = (0, 0, 0)
 LIVE_COLOUR = (240, 240, 240)
-window = pyglet.window.Window(720, 720)
+DIMENSION = 24
+window = pyglet.window.Window(730, 780)
+
+# Very noisy debugging but helpful to use on occasion
+# win_event_logger = pyglet.window.event.WindowEventLogger()
+# window.push_handlers(win_event_logger)
 background = pyglet.shapes.Rectangle(x=0, y=0, width=720, height=720, color=(64, 64, 64))
 shape_batch = pyglet.shapes.Batch()
 cell_grid = []
-for i in range(24):
-    for j in range(24):
-        cell_grid.append(pyglet.shapes.Rectangle(x=30 * j + 5, y=30 * i + 5, width=22, height=22, color=DEAD_COLOUR, batch=shape_batch))
+r = random.Random()
+seeded_cells = [(r.randint(0, 23), r.randint(0, 23)) for _ in range(5)]
+print(seeded_cells)
+for i in range(DIMENSION):
+    cell_grid.append([])
+    for j in range(DIMENSION):
+        colour = DEAD_COLOUR
+        print(f"i: {i}, j: {j}")
+        for s in seeded_cells:
+            if i == s[0] and j == s[1]:
+                colour = LIVE_COLOUR
+        cell_grid[i].append(pyglet.shapes.Rectangle(x=29 * j + 5, y=29 * i + 5, width=22, height=22,
+                                                 color=colour, batch=shape_batch))
 
 
-def mouse_intersects(x, y, rect: pyglet.shapes.Rectangle) -> bool:
+# frame = pyglet.gui.Frame(window, order=1)
+# go_button = pyglet.gui.PushButton(x=720 // 2, y=721, pressed=pyglet.resource.image('rocket_small.png'),
+#                                   depressed=pyglet.resource.image('go-button.png'),
+#                                   hover=pyglet.resource.image('go-button-down.png'),
+#                                   batch=shape_batch)
+# go_button.set_handler('on_press', activate_update)
+# frame.add_widget(go_button)
+
+
+def mouse_intersects_cell(x, y, rect: pyglet.shapes.Rectangle) -> bool:
     return (rect.x <= x < rect.x + 22 and
             rect.y <= y < rect.y + 22)
+
 
 @window.event
 def on_mouse_press(x, y, button, modifiers):
     if button == pyglet.window.mouse.LEFT:
         print(f"LMB pressed at {x},{y}")
-        for i, c in enumerate(cell_grid):
-            if mouse_intersects(x, y, c):
+        flattened_cells = itertools.chain(*cell_grid)
+        for i, c in enumerate(flattened_cells):
+            if mouse_intersects_cell(x, y, c):
                 print(f"{x},{y} insects with cell {c.x},{c.y} at index {i}")
                 c.color = LIVE_COLOUR if c.color == DEAD_COLOUR else DEAD_COLOUR
 
+
+MAX_BACKOFF = 20
+backoff = MAX_BACKOFF
+
 def update_cells(dt):
-    print(f"Called update at {dt}")
+    global backoff
+    print(f"Called update at {dt} (backoff: {backoff})")
+    if (0 < backoff <= MAX_BACKOFF):
+        backoff -= 1
+        return
+    print("Would update cells now")
+
 
 pyglet.clock.schedule_interval(update_cells, 0.5)
-
-
 
 
 @window.event
@@ -38,14 +75,6 @@ def on_draw():
     background.draw()
     shape_batch.draw()
 
-if __name__ == '__main__':
-    c = life.random_cell()
-    # c = life.initialize_cell()
-    print(c)
-    print(f"Is alive? {life.is_alive(c)}")
-    print(f"Is dead? {life.is_dead(c)}")
-    print(f"Live Neighbours? {life.count_neighbours(c, True)}")
-    print(f"Dead Neighbours? {life.count_neighbours(c, False)}")
-    print(f"Should live? {life.should_live(c)}")
 
+if __name__ == '__main__':
     pyglet.app.run()
