@@ -58,10 +58,6 @@ def is_live(rect: pyglet.shapes.Rectangle):
 
 backoff = MAX_BACKOFF
 
-def _update_cells(dt):
-    pass
-
-
 def update_cells(dt):
     global backoff
     print(f"Called update at {dt} (backoff: {backoff})")
