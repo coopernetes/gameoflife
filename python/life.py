@@ -1,15 +1,24 @@
 import copy
 import itertools
 import random
-from typing import List
+from typing import List, Callable, Any
 
 
-def initialize_cell():
+def empty_cell():
     return [
         [False, False, False],
         [False, False, False],
         [False, False, False]
     ]
+
+
+def initialize_cell(md_array: List[List], fn: Callable[[Any], bool]):
+    cell = []
+    for i in md_array:
+        cell.append([])
+        for j in i:
+            cell[i].append(fn(j))
+    return cell
 
 
 def random_cell():

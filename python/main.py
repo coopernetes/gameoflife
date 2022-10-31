@@ -54,8 +54,13 @@ def on_mouse_press(x, y, button, modifiers):
                 c.color = LIVE_COLOUR if c.color == DEAD_COLOUR else DEAD_COLOUR
 
 
+def is_live(rect: pyglet.shapes.Rectangle):
+    return rect.color == LIVE_COLOUR
+
+
 MAX_BACKOFF = 20
 backoff = MAX_BACKOFF
+
 
 def update_cells(dt):
     global backoff
@@ -63,7 +68,15 @@ def update_cells(dt):
     if (0 < backoff <= MAX_BACKOFF):
         backoff -= 1
         return
-    print("Would update cells now")
+    print("Update cells")
+    #TODO: Slice cell_grid in 3x3 md arrays and use life functions
+    #TODO: Convert 3x3 md array to cell_grid entries
+    # for i in range(DIMENSION):
+    #     this_group = [ cell_grid[i][i:i+3] ]
+    #     for j in range(0, DIMENSION, 3):
+    #         this_group.append()
+    #     c = life.initialize_cell(this_group, is_live)
+    #     print(c)
 
 
 pyglet.clock.schedule_interval(update_cells, 0.5)

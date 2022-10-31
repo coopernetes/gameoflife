@@ -9,7 +9,7 @@ Implementing [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Ga
 - Any other live cell dies. Similarly, all dead cells remain dead.
 
 TODO:
-* [Python tkinter](https://docs.python.org/3/library/tkinter.html)
+* ~[Python tkinter](https://docs.python.org/3/library/tkinter.html)~ [pyglet](https://pyglet.readthedocs.io/en/latest/index.html#)
 * Rust - in truth, I've never written Rust code (yet) so this is a first foray. Some prior reading and/or possibilities:
   * [gtk-rs](https://www.gtk.org/docs/language-bindings/rust/)
   * https://www.areweguiyet.com/
