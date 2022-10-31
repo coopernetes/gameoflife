@@ -26,36 +26,11 @@ def random_cell():
 def cell_from_grid(grid: List[List[bool]], x: int, y: int) -> List[List[bool]]:
     c = empty_cell()
     grid_len = len(grid)
-    # when x = 0 and y = 0:
-    #   c[j][i]...
-    #   c[0][0] == grid[-1][-1]
-    #   c[1][0] == grid[0][-1]
-    #   c[2][0] == grid[1][-1]
-
-    #   c[0][1] == grid[-1][0]
-    #   c[1][1] == grid[0][0]
-    #   c[2][1] == grid[1][0]
-
-    #   c[0][2] == grid[-1][1]
-    #   c[1][2] == grid[0][1]
-    #   c[2][2] == grid[1][1]
-
-    # when x, y = grid - 1 (23) and grid == 24:
-    #   c[j][i]...
-    #   c[0][0] == grid[22][22] ([x-1][y-1])
-    #   c[1][0] == grid[23][22] ([x][y-1])
-    #   c[2][0] == grid[-1][22] ([0][y-1])
-
-    #   c[0][1] == grid[-1][0] ([x-1][y])
-    #   c[1][1] == grid[0][0]  ([x][y])
-    #   c[2][1] == grid[1][0]  ([0][y])
-
-    #   c[0][2] == grid[-1][1]
-    #   c[1][2] == grid[0][1]
-    #   c[2][2] == grid[1][1]
     for i in range(3):
         for j in range(3):
-            c[j][i] = grid[j - (x % grid_len + 1)][i - (y % grid_len + 1)]
+            x_idx = (x - 1 + j) % grid_len
+            y_idx = (y - 1 + i) % grid_len
+            c[j][i] = grid[x_idx][y_idx]
     return c
 
 
