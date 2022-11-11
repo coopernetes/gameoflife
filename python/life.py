@@ -1,8 +1,7 @@
 import copy
 import itertools
 import random
-from typing import List, Callable, Any
-
+from typing import List
 
 def empty_cell():
     '''Create a 2d array and initalize all values to False.
